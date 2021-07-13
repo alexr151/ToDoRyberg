@@ -13,6 +13,7 @@ namespace ToDoRyberg.Models
         public DbSet<ToDo> ToDos { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Status> Statuses { get; set; }
+        public DbSet<Priority> Priorities { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -26,9 +27,16 @@ namespace ToDoRyberg.Models
 
             modelBuilder.Entity<Status>().HasData(
                 new Status { StatusId = "open", Name = "Open"},
-                new Status { StatusId = "closed", Name = "Completed"}
-                //new Status { StatusId = "inprogress", Name = "In Progress"},
-                //new Status { StatusId = "qa", Name = "Quality Assurance"}
+                new Status { StatusId = "closed", Name = "Completed"},
+                new Status { StatusId = "inprogress", Name = "In Progress"},
+                new Status { StatusId = "qa", Name = "Quality Assurance"}
+                );
+
+            modelBuilder.Entity<Priority>().HasData(
+                new Priority { PriorityId = "urgent", Name = "Urgent"},
+                new Priority { PriorityId = "high", Name = "High"},
+                new Priority { PriorityId = "moderate", Name = "Moderate"},
+                new Priority { PriorityId = "low", Name = "Low"}
                 );
         }
 

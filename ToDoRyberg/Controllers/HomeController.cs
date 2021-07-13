@@ -23,10 +23,12 @@ namespace ToDoRyberg.Controllers
             ViewBag.Categories = context.Categories.ToList();
             ViewBag.Statuses = context.Statuses.ToList();
             ViewBag.DueFilters = Filters.DueFilterValues;
+            ViewBag.Priorities = context.Priorities.ToList();
 
             IQueryable<ToDo> query = context.ToDos
                 .Include(t => t.Category)
-                .Include(t => t.Status);
+                .Include(t => t.Status)
+                .Include(t => t.Priority);
 
             if (filters.HasCategory)
             {
@@ -36,6 +38,11 @@ namespace ToDoRyberg.Controllers
             if (filters.HasSatus)
             {
                 query = query.Where(c => c.StatusId == filters.StatusId);
+            }
+
+            if (filters.HasPriority)
+            {
+                query = query.Where(c => c.PriorityId == filters.PriorityId);
             }
 
             if (filters.HasDue) { 
@@ -65,6 +72,7 @@ namespace ToDoRyberg.Controllers
         {
             ViewBag.Categories = context.Categories.ToList();
             ViewBag.Statuses = context.Statuses.ToList();
+            ViewBag.Priorities = context.Priorities.ToList();
             return View();
         }
 
@@ -81,6 +89,7 @@ namespace ToDoRyberg.Controllers
             {
                 ViewBag.Categories = context.Categories.ToList();
                 ViewBag.Statuses = context.Statuses.ToList();
+                ViewBag.Priorities = context.Priorities.ToList();
                 return View(task);
             }
         }

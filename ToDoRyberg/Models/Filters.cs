@@ -9,21 +9,24 @@ namespace ToDoRyberg.Models
     {
         public Filters(string filterstring)
         {
-            FilterString = filterstring ?? "all-all-all";
+            FilterString = filterstring ?? "all-all-all-all";
             string[] filters = FilterString.Split('-');
             CategoryId = filters[0];
             Due = filters[1];
             StatusId = filters[2];
+            PriorityId = filters[3];
         }
 
         public string FilterString { get; }
         public string CategoryId { get; }
         public string Due { get; }
         public string StatusId { get; }
+        public string PriorityId { get; }
 
         public bool HasCategory => CategoryId.ToLower() != "all";
         public bool HasDue => Due.ToLower() != "all";
         public bool HasSatus => StatusId.ToLower() != "all";
+        public bool HasPriority => PriorityId.ToLower() != "all";
 
         public static Dictionary<string, string> DueFilterValues =>
             new Dictionary<string, string>

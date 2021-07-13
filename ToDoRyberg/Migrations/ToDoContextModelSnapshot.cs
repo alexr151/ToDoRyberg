@@ -59,6 +59,41 @@ namespace ToDoRyberg.Migrations
                         });
                 });
 
+            modelBuilder.Entity("ToDoRyberg.Models.Priority", b =>
+                {
+                    b.Property<string>("PriorityId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("PriorityId");
+
+                    b.ToTable("Priorities");
+
+                    b.HasData(
+                        new
+                        {
+                            PriorityId = "urgent",
+                            Name = "Urgent"
+                        },
+                        new
+                        {
+                            PriorityId = "high",
+                            Name = "High"
+                        },
+                        new
+                        {
+                            PriorityId = "moderate",
+                            Name = "Moderate"
+                        },
+                        new
+                        {
+                            PriorityId = "low",
+                            Name = "Low"
+                        });
+                });
+
             modelBuilder.Entity("ToDoRyberg.Models.Status", b =>
                 {
                     b.Property<string>("StatusId")
@@ -81,6 +116,16 @@ namespace ToDoRyberg.Migrations
                         {
                             StatusId = "closed",
                             Name = "Completed"
+                        },
+                        new
+                        {
+                            StatusId = "inprogress",
+                            Name = "In Progress"
+                        },
+                        new
+                        {
+                            StatusId = "qa",
+                            Name = "Quality Assurance"
                         });
                 });
 
@@ -99,8 +144,13 @@ namespace ToDoRyberg.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("DueDate")
+                    b.Property<DateTime?>("DueDate")
+                        .IsRequired()
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("PriorityId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("StatusId")
                         .IsRequired()
@@ -109,6 +159,8 @@ namespace ToDoRyberg.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
+
+                    b.HasIndex("PriorityId");
 
                     b.HasIndex("StatusId");
 
@@ -123,6 +175,12 @@ namespace ToDoRyberg.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("ToDoRyberg.Models.Priority", "Priority")
+                        .WithMany()
+                        .HasForeignKey("PriorityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("ToDoRyberg.Models.Status", "Status")
                         .WithMany()
                         .HasForeignKey("StatusId")
@@ -130,6 +188,8 @@ namespace ToDoRyberg.Migrations
                         .IsRequired();
 
                     b.Navigation("Category");
+
+                    b.Navigation("Priority");
 
                     b.Navigation("Status");
                 });
