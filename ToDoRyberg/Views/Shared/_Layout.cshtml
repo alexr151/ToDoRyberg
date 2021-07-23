@@ -13,6 +13,7 @@
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <!--<partial name="_NavbarMenuButtonPartial" />-->
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">ToDoRyberg</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -37,6 +38,7 @@
             <h1 class="m-3 p-3">My Tasks</h1>
         </header>
         <main role="main" class="pb-3">
+            <!--<my-temp-message />-->
             @RenderBody()
         </main>
     </div>
